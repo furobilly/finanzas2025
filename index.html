@@ -1,0 +1,275 @@
+<!-- index.html - v0.5 - 2025-07-21 15:57 (hora de Guadalajara) -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manejo de tus Finanzas Personales</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --color1: #e8ddcb;
+      --color2: #ae2f27;
+      --color3: #cdb380;
+      --color4: #036564;
+      --color5: #033649;
+      --color6: #031634;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--color1);
+      color: #333;
+      padding-bottom: 100px;
+    }
+    header {
+      background-color: var(--color5);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.3rem;
+    }
+    header p {
+      font-size: 1rem;
+      font-style: italic;
+    }
+    section {
+      background-color: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    h2 {
+      font-size: 1.3rem;
+      color: var(--color4);
+      margin-bottom: 1rem;
+    }
+    footer {
+      background-color: var(--color5);
+      color: white;
+      padding: 15px;
+      text-align: center;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+    }
+    .boton {
+      margin-top: 10px;
+    }
+    .resaltado {
+      font-weight: bold;
+      color: var(--color2);
+    }
+    .fade-in {
+      animation: fadeIn 0.4s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .icono-borrar:hover {
+      color: red;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>💰 Manejo de tus Finanzas Personales</h1>
+    <p>"Administra tus ingresos y vive con inteligencia financiera"</p>
+  </header>
+
+  <div class="container">
+
+    <!-- Perfil de usuario -->
+    <section id="perfil">
+      <h2>👤 Perfil de Usuario</h2>
+      <input id="nombreUsuario" class="form-control mb-2" placeholder="Ej. Toño Meza" />
+      <button class="btn btn-primary" onclick="guardarNombre()">Guardar Nombre</button>
+      <p class="mt-2">Bienvenido/a: <span id="usuarioMostrado" class="resaltado">--</span></p>
+    </section>
+
+    <!-- Ingreso y Saldo -->
+    <section>
+      <h2>💡 Ingresos y Saldo Disponible</h2>
+      <input type="number" id="ingresoQuincenal" class="form-control" placeholder="Ej. 4000" />
+      <button class="btn btn-success mt-2" onclick="guardarIngreso()">Actualizar ingreso</button>
+      <p id="saldoDisponible" class="mt-2 resaltado">Saldo disponible: --</p>
+    </section>
+
+    <!-- Resumen por quincena -->
+    <section>
+      <h2>📆 Resumen por Quincena</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <p>🗓️ Quincena 15: <span id="totalQ1" class="resaltado">$0.00</span></p>
+        </div>
+        <div class="col-md-6">
+          <p>🗓️ Quincena 30: <span id="totalQ2" class="resaltado">$0.00</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Registro de servicios -->
+    <section>
+      <h2>📋 Registro de Servicios</h2>
+      <input type="text" id="nombreServicio" class="form-control mb-1" placeholder="Ej. Luz 💡, Internet 🌐">
+      <input type="date" id="fechaServicio" class="form-control mb-1">
+      <input type="number" id="montoServicio" class="form-control mb-1" placeholder="Monto">
+      <select id="frecuenciaServicio" class="form-control mb-2">
+        <option value="mensual">Mensual</option>
+        <option value="bimestral">Bimestral</option>
+        <option value="anual">Anual</option>
+      </select>
+      <button class="btn btn-secondary" onclick="guardarServicio()">Agregar Servicio</button>
+      <ul id="listaServicios" class="mt-3"></ul>
+    </section>
+
+    <!-- Registro de préstamos -->
+    <section>
+      <h2>💳 Registro de Préstamos</h2>
+      <input type="text" id="nombrePrestamo" class="form-control mb-1" placeholder="Ej. Crédito Elektra">
+      <input type="number" id="montoTotal" class="form-control mb-1" placeholder="Monto total">
+      <input type="number" id="pagosTotales" class="form-control mb-1" placeholder="Número de pagos (ej. 24)">
+      <input type="number" id="pagosRealizados" class="form-control mb-1" placeholder="Pagos realizados">
+      <select id="frecuenciaPrestamo" class="form-control mb-2">
+        <option value="mensual">Mensual</option>
+        <option value="quincenal">Quincenal</option>
+      </select>
+      <button class="btn btn-secondary" onclick="guardarPrestamo()">Agregar Préstamo</button>
+      <ul id="listaPrestamos" class="mt-3"></ul>
+    </section>
+
+    <!-- Balance mensual -->
+    <section>
+      <h2>📊 Balance mensual - <span id="mesActual"></span></h2>
+      <p>Ingreso total: <span id="ingresoTotalMes" class="resaltado">$0.00</span></p>
+      <p>Total gastos: <span id="gastosTotalesMes" class="resaltado">$0.00</span></p>
+      <p>Saldo restante: <span id="saldoRestanteMes" class="resaltado">$0.00</span></p>
+    </section>
+  </div>
+
+  <footer>
+    Sistema Finanzas Personales v0.5 - Última actualización: 21 julio 2025, 15:57 h (GDL)
+  </footer>
+
+  <script>
+    // Utilidades
+    const mesActual = new Date().toLocaleString('es-MX', { month: 'long', year: 'numeric' });
+    document.getElementById("mesActual").textContent = mesActual;
+
+    function guardarNombre() {
+      const nombre = document.getElementById("nombreUsuario").value;
+      localStorage.setItem("usuario", nombre);
+      document.getElementById("usuarioMostrado").textContent = nombre;
+    }
+
+    function guardarIngreso() {
+      const ingreso = parseFloat(document.getElementById("ingresoQuincenal").value) || 0;
+      localStorage.setItem("ingresoQuincenal", ingreso);
+      const total = ingreso * 2;
+      document.getElementById("ingresoTotalMes").textContent = `$${total.toFixed(2)}`;
+      calcularBalance();
+    }
+
+    const servicios = [];
+    function guardarServicio() {
+      const nombre = document.getElementById("nombreServicio").value;
+      const fecha = document.getElementById("fechaServicio").value;
+      const monto = parseFloat(document.getElementById("montoServicio").value);
+      if (!nombre || !fecha || isNaN(monto)) return;
+      const item = { nombre, fecha, monto };
+      servicios.push(item);
+      mostrarServicios();
+      calcularBalance();
+    }
+
+    function mostrarServicios() {
+      const lista = document.getElementById("listaServicios");
+      lista.innerHTML = "";
+      let totalQ1 = 0, totalQ2 = 0, totalGastos = 0;
+      servicios.forEach((s, i) => {
+        const fecha = new Date(s.fecha).getDate();
+        if (fecha <= 15) totalQ1 += s.monto;
+        else totalQ2 += s.monto;
+        totalGastos += s.monto;
+        const li = document.createElement("li");
+        li.classList.add("fade-in");
+        li.innerHTML = `📌 ${s.nombre} - $${s.monto.toFixed(2)} 
+          <span class="icono-borrar ms-2" onclick="eliminarServicio(${i})">🗑️</span>`;
+        lista.appendChild(li);
+      });
+      document.getElementById("totalQ1").textContent = `$${totalQ1.toFixed(2)}`;
+      document.getElementById("totalQ2").textContent = `$${totalQ2.toFixed(2)}`;
+      document.getElementById("gastosTotalesMes").textContent = `$${totalGastos.toFixed(2)}`;
+    }
+
+    function eliminarServicio(i) {
+      if (confirm("¿Estás seguro de eliminar este servicio?")) {
+        servicios.splice(i, 1);
+        mostrarServicios();
+        calcularBalance();
+      }
+    }
+
+    const prestamos = [];
+    function guardarPrestamo() {
+      const nombre = document.getElementById("nombrePrestamo").value;
+      const total = parseFloat(document.getElementById("montoTotal").value);
+      const pagos = parseInt(document.getElementById("pagosTotales").value);
+      const hechos = parseInt(document.getElementById("pagosRealizados").value);
+      if (!nombre || isNaN(total) || isNaN(pagos) || isNaN(hechos)) return;
+      const montoMensual = total / pagos;
+      prestamos.push({ nombre, total, pagos, hechos, montoMensual });
+      mostrarPrestamos();
+      calcularBalance();
+    }
+
+    function mostrarPrestamos() {
+      const lista = document.getElementById("listaPrestamos");
+      lista.innerHTML = "";
+      let totalPrestamos = 0;
+      prestamos.forEach((p, i) => {
+        const restante = p.total - (p.montoMensual * p.hechos);
+        totalPrestamos += restante;
+        const li = document.createElement("li");
+        li.classList.add("fade-in");
+        li.innerHTML = `📌 ${p.nombre}: $${p.montoMensual.toFixed(2)} x ${p.pagos} pagos 
+          - Restan ${p.pagos - p.hechos} pagos
+          <span class="icono-borrar ms-2" onclick="eliminarPrestamo(${i})">🗑️</span>`;
+        lista.appendChild(li);
+      });
+      document.getElementById("saldoRestanteMes").textContent = `$${(parseFloat(localStorage.getItem("ingresoQuincenal") || 0)*2 - totalPrestamos).toFixed(2)}`;
+    }
+
+    function eliminarPrestamo(i) {
+      if (confirm("¿Eliminar este préstamo?")) {
+        prestamos.splice(i, 1);
+        mostrarPrestamos();
+        calcularBalance();
+      }
+    }
+
+    function calcularBalance() {
+      const ingreso = parseFloat(localStorage.getItem("ingresoQuincenal") || 0) * 2;
+      const gastos = servicios.reduce((acc, s) => acc + s.monto, 0);
+      const restante = ingreso - gastos;
+      document.getElementById("saldoDisponible").textContent = `Saldo disponible: $${restante.toFixed(2)}`;
+    }
+
+    // Al cargar
+    window.onload = function() {
+      const nombre = localStorage.getItem("usuario");
+      if (nombre) document.getElementById("usuarioMostrado").textContent = nombre;
+      const ingreso = parseFloat(localStorage.getItem("ingresoQuincenal") || 0);
+      if (ingreso) {
+        document.getElementById("ingresoQuincenal").value = ingreso;
+        document.getElementById("ingresoTotalMes").textContent = `$${(ingreso * 2).toFixed(2)}`;
+        calcularBalance();
+      }
+    };
+  </script>
+</body>
+</html>
