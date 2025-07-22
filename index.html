@@ -1,275 +1,606 @@
-<!-- index.html - v0.5 - 2025-07-21 15:57 (hora de Guadalajara) -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Manejo de tus Finanzas Personales</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Gestión Financiera Personal - Finanzas2025</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
-    :root {
-      --color1: #e8ddcb;
-      --color2: #ae2f27;
-      --color3: #cdb380;
-      --color4: #036564;
-      --color5: #033649;
-      --color6: #031634;
-    }
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: var(--color1);
+      margin: 0;
+      padding: 0;
+      background: #f2f2f2;
       color: #333;
-      padding-bottom: 100px;
     }
+
     header {
-      background-color: var(--color5);
+      background-color: #036564;
       color: white;
       padding: 20px;
       text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 999;
     }
+
     header h1 {
-      font-size: 1.8rem;
-      margin-bottom: 0.3rem;
+      margin: 0;
+      font-size: 26px;
     }
-    header p {
-      font-size: 1rem;
-      font-style: italic;
-    }
-    section {
-      background-color: white;
-      border-radius: 8px;
+
+    .container {
       padding: 20px;
-      margin-top: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .section {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    h2 {
-      font-size: 1.3rem;
-      color: var(--color4);
-      margin-bottom: 1rem;
+
+    .section h2 {
+      margin-top: 0;
+      color: #023047;
     }
-    footer {
-      background-color: var(--color5);
+
+    input, select, button, textarea {
+      font-family: inherit;
+      font-size: 16px;
+      padding: 8px;
+      margin: 5px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #219ebc;
       color: white;
-      padding: 15px;
-      text-align: center;
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
+      border: none;
+      cursor: pointer;
     }
-    .boton {
+
+    button:hover {
+      background-color: #023047;
+    }
+
+    .subsection {
+      margin-top: 20px;
+    }
+
+    .flex-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .flex-2 {
+      flex: 2;
+    }
+
+    .flex-1 {
+      flex: 1;
+    }
+
+    .resumen-card {
+      padding: 10px;
+      border-left: 5px solid #ffb703;
+      margin-bottom: 10px;
+      background: #fff3cd;
+      border-radius: 5px;
+    }
+
+    .resumen-card h4 {
+      margin: 0 0 4px 0;
+      font-size: 16px;
+    }
+
+    .resumen-card p {
+      margin: 0;
+      font-weight: bold;
+    }
+
+    .badge {
+      background-color: #c1121f;
+      color: white;
+      font-size: 13px;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .table-container {
+      overflow-x: auto;
       margin-top: 10px;
     }
-    .resaltado {
-      font-weight: bold;
-      color: var(--color2);
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
     }
+
+    th, td {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #8ecae6;
+      color: #023047;
+    }
+
+    .acciones button {
+      margin-right: 6px;
+      padding: 5px 10px;
+      font-size: 14px;
+    }
+
+    .acciones button.eliminar {
+      background-color: #c1121f;
+    }
+
+    .acciones button.eliminar:hover {
+      background-color: #780000;
+    }
+
+    .acciones button.editar {
+      background-color: #ffb703;
+      color: black;
+    }
+
+    .acciones button.editar:hover {
+      background-color: #fb8500;
+    }
+
+    .separador {
+      border-top: 1px solid #ccc;
+      margin: 30px 0;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 13px;
+      padding: 10px;
+      color: #666;
+    }
+
+    .icono-servicio {
+      font-size: 18px;
+      margin-right: 6px;
+    }
+
     .fade-in {
-      animation: fadeIn 0.4s ease-in;
+      animation: fadeIn 0.8s ease-in-out;
     }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .icono-borrar:hover {
-      color: red;
-      cursor: pointer;
+
+    .alerta {
+      background-color: #ffcccb;
+      padding: 10px;
+      border-left: 5px solid red;
+      border-radius: 5px;
+      margin: 10px 0;
+    }
+
+    .resaltado {
+      background-color: #d9f0ff;
+      border-left: 5px solid #219ebc;
+      padding: 12px;
+      border-radius: 6px;
+    }
+
+    .titulo-resumen {
+      font-size: 18px;
+      font-weight: bold;
+      color: #023047;
+      margin-bottom: 6px;
+    }
+
+    .monto-final {
+      font-size: 22px;
+      font-weight: bold;
+      color: #036564;
     }
   </style>
 </head>
-<body>
+<body class="fade-in">
   <header>
-    <h1>💰 Manejo de tus Finanzas Personales</h1>
-    <p>"Administra tus ingresos y vive con inteligencia financiera"</p>
+    <h1><i class="fas fa-wallet"></i> Finanzas 2025 — Sistema de Gestión Financiera Personal</h1>
   </header>
 
   <div class="container">
-
-    <!-- Perfil de usuario -->
-    <section id="perfil">
-      <h2>👤 Perfil de Usuario</h2>
-      <input id="nombreUsuario" class="form-control mb-2" placeholder="Ej. Toño Meza" />
-      <button class="btn btn-primary" onclick="guardarNombre()">Guardar Nombre</button>
-      <p class="mt-2">Bienvenido/a: <span id="usuarioMostrado" class="resaltado">--</span></p>
-    </section>
-
-    <!-- Ingreso y Saldo -->
-    <section>
-      <h2>💡 Ingresos y Saldo Disponible</h2>
-      <input type="number" id="ingresoQuincenal" class="form-control" placeholder="Ej. 4000" />
-      <button class="btn btn-success mt-2" onclick="guardarIngreso()">Actualizar ingreso</button>
-      <p id="saldoDisponible" class="mt-2 resaltado">Saldo disponible: --</p>
-    </section>
-
-    <!-- Resumen por quincena -->
-    <section>
-      <h2>📆 Resumen por Quincena</h2>
-      <div class="row">
-        <div class="col-md-6">
-          <p>🗓️ Quincena 15: <span id="totalQ1" class="resaltado">$0.00</span></p>
+    <!-- INGRESOS -->
+    <div class="section" id="seccion-ingresos">
+      <h2>Registro de Ingresos</h2>
+      <div class="flex-row">
+        <div class="flex-2">
+          <label>Descripción del ingreso</label>
+          <input type="text" id="descIngreso" placeholder="Ej: Quincena, extra, venta...">
         </div>
-        <div class="col-md-6">
-          <p>🗓️ Quincena 30: <span id="totalQ2" class="resaltado">$0.00</span></p>
+        <div class="flex-1">
+          <label>Monto ($)</label>
+          <input type="number" id="montoIngreso">
+        </div>
+        <div class="flex-1">
+          <label>Fecha</label>
+          <input type="date" id="fechaIngreso">
         </div>
       </div>
-    </section>
+      <button onclick="registrarIngreso()">Registrar ingreso</button>
 
-    <!-- Registro de servicios -->
-    <section>
-      <h2>📋 Registro de Servicios</h2>
-      <input type="text" id="nombreServicio" class="form-control mb-1" placeholder="Ej. Luz 💡, Internet 🌐">
-      <input type="date" id="fechaServicio" class="form-control mb-1">
-      <input type="number" id="montoServicio" class="form-control mb-1" placeholder="Monto">
-      <select id="frecuenciaServicio" class="form-control mb-2">
-        <option value="mensual">Mensual</option>
-        <option value="bimestral">Bimestral</option>
-        <option value="anual">Anual</option>
-      </select>
-      <button class="btn btn-secondary" onclick="guardarServicio()">Agregar Servicio</button>
-      <ul id="listaServicios" class="mt-3"></ul>
-    </section>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Descripción</th>
+              <th>Monto</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tablaIngresos"></tbody>
+        </table>
+      </div>
+    </div>
 
-    <!-- Registro de préstamos -->
-    <section>
-      <h2>💳 Registro de Préstamos</h2>
-      <input type="text" id="nombrePrestamo" class="form-control mb-1" placeholder="Ej. Crédito Elektra">
-      <input type="number" id="montoTotal" class="form-control mb-1" placeholder="Monto total">
-      <input type="number" id="pagosTotales" class="form-control mb-1" placeholder="Número de pagos (ej. 24)">
-      <input type="number" id="pagosRealizados" class="form-control mb-1" placeholder="Pagos realizados">
-      <select id="frecuenciaPrestamo" class="form-control mb-2">
-        <option value="mensual">Mensual</option>
-        <option value="quincenal">Quincenal</option>
-      </select>
-      <button class="btn btn-secondary" onclick="guardarPrestamo()">Agregar Préstamo</button>
-      <ul id="listaPrestamos" class="mt-3"></ul>
-    </section>
+    <!-- TARJETAS -->
+    <div class="section" id="seccion-tarjetas">
+      <h2>Gestión de Tarjetas de Crédito</h2>
+      <div class="flex-row">
+        <div class="flex-1">
+          <label>Institución</label>
+          <input type="text" id="nombreTarjeta">
+        </div>
+        <div class="flex-1">
+          <label>Apodo</label>
+          <input type="text" id="apodoTarjeta">
+        </div>
+        <div class="flex-1">
+          <label>Últimos 4 dígitos</label>
+          <input type="text" id="ultimosDigitos">
+        </div>
+        <div class="flex-1">
+          <label>Tipo</label>
+          <select id="tipoTarjeta">
+            <option value="Física">Física</option>
+            <option value="Digital">Digital</option>
+          </select>
+        </div>
+      </div>
+      <div class="flex-row">
+        <div class="flex-1">
+          <label>Límite de crédito</label>
+          <input type="number" id="limiteCredito">
+        </div>
+        <div class="flex-1">
+          <label>Fecha de corte</label>
+          <input type="date" id="fechaCorte">
+        </div>
+      </div>
+      <button onclick="registrarTarjeta()">Guardar tarjeta</button>
 
-    <!-- Balance mensual -->
-    <section>
-      <h2>📊 Balance mensual - <span id="mesActual"></span></h2>
-      <p>Ingreso total: <span id="ingresoTotalMes" class="resaltado">$0.00</span></p>
-      <p>Total gastos: <span id="gastosTotalesMes" class="resaltado">$0.00</span></p>
-      <p>Saldo restante: <span id="saldoRestanteMes" class="resaltado">$0.00</span></p>
-    </section>
-  </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Apodo</th>
+              <th>Institución</th>
+              <th>Tipo</th>
+              <th>Últimos 4</th>
+              <th>Límite</th>
+              <th>Corte</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tablaTarjetas"></tbody>
+        </table>
+      </div>
+    </div>
 
-  <footer>
-    Sistema Finanzas Personales v0.5 - Última actualización: 21 julio 2025, 15:57 h (GDL)
-  </footer>
+    <!-- SERVICIOS -->
+    <div class="section" id="seccion-servicios">
+      <h2>Servicios y Pagos Fijos</h2>
+      <div class="flex-row">
+        <div class="flex-2">
+          <label>Nombre del servicio</label>
+          <input type="text" id="nombreServicio">
+        </div>
+        <div class="flex-1">
+          <label>Icono</label>
+          <input type="text" id="iconoServicio" placeholder="Ej: fa-bolt, fa-wifi, fa-tint">
+        </div>
+        <div class="flex-1">
+          <label>Monto</label>
+          <input type="number" id="montoServicio">
+        </div>
+        <div class="flex-1">
+          <label>Frecuencia</label>
+          <select id="frecuenciaServicio">
+            <option value="Mensual">Mensual</option>
+            <option value="Quincenal">Quincenal</option>
+            <option value="Anual">Anual</option>
+          </select>
+        </div>
+        <div class="flex-1">
+          <label>Fecha de pago</label>
+          <input type="date" id="fechaServicio">
+        </div>
+      </div>
+      <button onclick="registrarServicio()">Guardar servicio</button>
 
-  <script>
-    // Utilidades
-    const mesActual = new Date().toLocaleString('es-MX', { month: 'long', year: 'numeric' });
-    document.getElementById("mesActual").textContent = mesActual;
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Servicio</th>
+              <th>Icono</th>
+              <th>Monto</th>
+              <th>Frecuencia</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tablaServicios"></tbody>
+        </table>
+      </div>
+    </div>
+    <!-- PRÉSTAMOS -->
+    <div class="section" id="seccion-prestamos">
+      <h2>Registro de Préstamos</h2>
+      <div class="flex-row">
+        <div class="flex-2">
+          <label>Descripción del préstamo</label>
+          <input type="text" id="descPrestamo" placeholder="Ej: Crédito Infonavit, préstamo amigo...">
+        </div>
+        <div class="flex-1">
+          <label>Monto</label>
+          <input type="number" id="montoPrestamo">
+        </div>
+        <div class="flex-1">
+          <label>Frecuencia</label>
+          <select id="frecuenciaPrestamo">
+            <option value="Mensual">Mensual</option>
+            <option value="Quincenal">Quincenal</option>
+            <option value="Anual">Anual</option>
+          </select>
+        </div>
+        <div class="flex-1">
+          <label>Fecha de pago</label>
+          <input type="date" id="fechaPrestamo">
+        </div>
+      </div>
+      <button onclick="registrarPrestamo()">Registrar préstamo</button>
 
-    function guardarNombre() {
-      const nombre = document.getElementById("nombreUsuario").value;
-      localStorage.setItem("usuario", nombre);
-      document.getElementById("usuarioMostrado").textContent = nombre;
-    }
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Descripción</th>
+              <th>Monto</th>
+              <th>Frecuencia</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tablaPrestamos"></tbody>
+        </table>
+      </div>
+    </div>
 
-    function guardarIngreso() {
-      const ingreso = parseFloat(document.getElementById("ingresoQuincenal").value) || 0;
-      localStorage.setItem("ingresoQuincenal", ingreso);
-      const total = ingreso * 2;
-      document.getElementById("ingresoTotalMes").textContent = `$${total.toFixed(2)}`;
-      calcularBalance();
-    }
+    <!-- RESUMEN FINAL -->
+    <div class="section" id="seccion-balance">
+      <h2>📊 Balance mensual: <span id="mesBalance"></span></h2>
+      <div class="balance-card">
+        <p><strong>Ingreso total:</strong> $<span id="totalIngresos"></span></p>
+        <p><strong>Total gastos:</strong> $<span id="totalGastos"></span></p>
+        <p><strong>Saldo restante:</strong> $<span id="saldoRestante"></span></p>
+      </div>
+    </div>
 
-    const servicios = [];
-    function guardarServicio() {
-      const nombre = document.getElementById("nombreServicio").value;
-      const fecha = document.getElementById("fechaServicio").value;
-      const monto = parseFloat(document.getElementById("montoServicio").value);
-      if (!nombre || !fecha || isNaN(monto)) return;
-      const item = { nombre, fecha, monto };
-      servicios.push(item);
-      mostrarServicios();
-      calcularBalance();
-    }
+    <!-- FOOTER EDUCATIVO -->
+    <footer>
+      <p><strong>Finanzas Personales 2025</strong> | Usuario actual: <span id="nombreUsuario">Usuario 1</span></p>
+      <p><em id="fraseMotivadora"></em></p>
+      <p>Versión inicial con funciones completas – Última actualización: 22/07/2025 – 16:00h</p>
+    </footer>
+  </main>
+<script>
+// FRASE MOTIVADORA ALEATORIA
+const frases = [
+  "💡 ¡Tú controlas tu dinero, no al revés!",
+  "📈 Cada peso cuenta. ¡Sigue así!",
+  "✅ Las buenas decisiones traen buenos resultados.",
+  "📊 Tu futuro financiero se construye hoy.",
+  "💰 El ahorro no es un sacrificio, es una estrategia."
+];
+document.getElementById("fraseMotivadora").innerText = frases[Math.floor(Math.random() * frases.length)];
 
-    function mostrarServicios() {
-      const lista = document.getElementById("listaServicios");
-      lista.innerHTML = "";
-      let totalQ1 = 0, totalQ2 = 0, totalGastos = 0;
-      servicios.forEach((s, i) => {
-        const fecha = new Date(s.fecha).getDate();
-        if (fecha <= 15) totalQ1 += s.monto;
-        else totalQ2 += s.monto;
-        totalGastos += s.monto;
-        const li = document.createElement("li");
-        li.classList.add("fade-in");
-        li.innerHTML = `📌 ${s.nombre} - $${s.monto.toFixed(2)} 
-          <span class="icono-borrar ms-2" onclick="eliminarServicio(${i})">🗑️</span>`;
-        lista.appendChild(li);
-      });
-      document.getElementById("totalQ1").textContent = `$${totalQ1.toFixed(2)}`;
-      document.getElementById("totalQ2").textContent = `$${totalQ2.toFixed(2)}`;
-      document.getElementById("gastosTotalesMes").textContent = `$${totalGastos.toFixed(2)}`;
-    }
+// NOMBRE DE USUARIO
+function actualizarUsuario() {
+  const nombre = localStorage.getItem("usuarioFinanzas") || "Usuario 1";
+  document.getElementById("nombreUsuario").innerText = nombre;
+}
+actualizarUsuario();
 
-    function eliminarServicio(i) {
-      if (confirm("¿Estás seguro de eliminar este servicio?")) {
-        servicios.splice(i, 1);
-        mostrarServicios();
-        calcularBalance();
-      }
-    }
+// REGISTRAR USUARIO
+function registrarUsuario() {
+  const nombre = prompt("Ingresa tu nombre:");
+  if (nombre) {
+    localStorage.setItem("usuarioFinanzas", nombre);
+    actualizarUsuario();
+    alert("Usuario guardado correctamente.");
+  }
+}
 
-    const prestamos = [];
-    function guardarPrestamo() {
-      const nombre = document.getElementById("nombrePrestamo").value;
-      const total = parseFloat(document.getElementById("montoTotal").value);
-      const pagos = parseInt(document.getElementById("pagosTotales").value);
-      const hechos = parseInt(document.getElementById("pagosRealizados").value);
-      if (!nombre || isNaN(total) || isNaN(pagos) || isNaN(hechos)) return;
-      const montoMensual = total / pagos;
-      prestamos.push({ nombre, total, pagos, hechos, montoMensual });
-      mostrarPrestamos();
-      calcularBalance();
-    }
+// ACTUALIZAR INGRESOS
+function actualizarIngresos() {
+  const ingreso = parseFloat(document.getElementById("ingreso").value);
+  if (isNaN(ingreso) || ingreso < 0) return alert("Ingreso inválido");
+  localStorage.setItem("ingresoMensual", ingreso.toFixed(2));
+  calcularResumen();
+}
 
-    function mostrarPrestamos() {
-      const lista = document.getElementById("listaPrestamos");
-      lista.innerHTML = "";
-      let totalPrestamos = 0;
-      prestamos.forEach((p, i) => {
-        const restante = p.total - (p.montoMensual * p.hechos);
-        totalPrestamos += restante;
-        const li = document.createElement("li");
-        li.classList.add("fade-in");
-        li.innerHTML = `📌 ${p.nombre}: $${p.montoMensual.toFixed(2)} x ${p.pagos} pagos 
-          - Restan ${p.pagos - p.hechos} pagos
-          <span class="icono-borrar ms-2" onclick="eliminarPrestamo(${i})">🗑️</span>`;
-        lista.appendChild(li);
-      });
-      document.getElementById("saldoRestanteMes").textContent = `$${(parseFloat(localStorage.getItem("ingresoQuincenal") || 0)*2 - totalPrestamos).toFixed(2)}`;
-    }
+// REGISTRAR TARJETA
+function registrarTarjeta() {
+  const alias = document.getElementById("aliasTarjeta").value;
+  const monto = parseFloat(document.getElementById("montoTarjeta").value);
+  const fecha = document.getElementById("fechaTarjeta").value;
+  if (!alias || isNaN(monto)) return alert("Completa los datos correctamente");
 
-    function eliminarPrestamo(i) {
-      if (confirm("¿Eliminar este préstamo?")) {
-        prestamos.splice(i, 1);
-        mostrarPrestamos();
-        calcularBalance();
-      }
-    }
+  const tarjetas = JSON.parse(localStorage.getItem("tarjetas")) || [];
+  tarjetas.push({ alias, monto, fecha });
+  localStorage.setItem("tarjetas", JSON.stringify(tarjetas));
+  mostrarTarjetas();
+}
 
-    function calcularBalance() {
-      const ingreso = parseFloat(localStorage.getItem("ingresoQuincenal") || 0) * 2;
-      const gastos = servicios.reduce((acc, s) => acc + s.monto, 0);
-      const restante = ingreso - gastos;
-      document.getElementById("saldoDisponible").textContent = `Saldo disponible: $${restante.toFixed(2)}`;
-    }
+// MOSTRAR TARJETAS
+function mostrarTarjetas() {
+  const tarjetas = JSON.parse(localStorage.getItem("tarjetas")) || [];
+  const tbody = document.getElementById("tablaTarjetas");
+  tbody.innerHTML = "";
+  tarjetas.forEach((t, i) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${t.alias}</td>
+        <td>$${parseFloat(t.monto).toFixed(2)}</td>
+        <td>${t.fecha}</td>
+        <td>
+          <button onclick="eliminarTarjeta(${i})">❌</button>
+        </td>
+      </tr>`;
+  });
+}
 
-    // Al cargar
-    window.onload = function() {
-      const nombre = localStorage.getItem("usuario");
-      if (nombre) document.getElementById("usuarioMostrado").textContent = nombre;
-      const ingreso = parseFloat(localStorage.getItem("ingresoQuincenal") || 0);
-      if (ingreso) {
-        document.getElementById("ingresoQuincenal").value = ingreso;
-        document.getElementById("ingresoTotalMes").textContent = `$${(ingreso * 2).toFixed(2)}`;
-        calcularBalance();
-      }
-    };
-  </script>
-</body>
-</html>
+// ELIMINAR TARJETA
+function eliminarTarjeta(index) {
+  if (!confirm("¿Eliminar esta tarjeta?")) return;
+  const tarjetas = JSON.parse(localStorage.getItem("tarjetas")) || [];
+  tarjetas.splice(index, 1);
+  localStorage.setItem("tarjetas", JSON.stringify(tarjetas));
+  mostrarTarjetas();
+}
+
+// REGISTRAR SERVICIO
+function registrarServicio() {
+  const nombre = document.getElementById("nombreServicio").value;
+  const monto = parseFloat(document.getElementById("montoServicio").value);
+  const frecuencia = document.getElementById("frecuenciaServicio").value;
+  const fecha = document.getElementById("fechaServicio").value;
+  if (!nombre || isNaN(monto)) return alert("Datos del servicio incompletos");
+
+  const servicios = JSON.parse(localStorage.getItem("servicios")) || [];
+  servicios.push({ nombre, monto, frecuencia, fecha });
+  localStorage.setItem("servicios", JSON.stringify(servicios));
+  mostrarServicios();
+}
+
+// MOSTRAR SERVICIOS
+function mostrarServicios() {
+  const servicios = JSON.parse(localStorage.getItem("servicios")) || [];
+  const tbody = document.getElementById("tablaServicios");
+  tbody.innerHTML = "";
+  servicios.forEach((s, i) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${s.nombre}</td>
+        <td>$${s.monto.toFixed(2)}</td>
+        <td>${s.frecuencia}</td>
+        <td>${s.fecha}</td>
+        <td>
+          <button onclick="eliminarServicio(${i})">❌</button>
+        </td>
+      </tr>`;
+  });
+}
+
+// ELIMINAR SERVICIO
+function eliminarServicio(index) {
+  if (!confirm("¿Eliminar este servicio?")) return;
+  const servicios = JSON.parse(localStorage.getItem("servicios")) || [];
+  servicios.splice(index, 1);
+  localStorage.setItem("servicios", JSON.stringify(servicios));
+  mostrarServicios();
+}
+
+// REGISTRAR PRÉSTAMO
+function registrarPrestamo() {
+  const desc = document.getElementById("descPrestamo").value;
+  const monto = parseFloat(document.getElementById("montoPrestamo").value);
+  const frecuencia = document.getElementById("frecuenciaPrestamo").value;
+  const fecha = document.getElementById("fechaPrestamo").value;
+  if (!desc || isNaN(monto)) return alert("Completa los campos del préstamo");
+
+  const prestamos = JSON.parse(localStorage.getItem("prestamos")) || [];
+  prestamos.push({ desc, monto, frecuencia, fecha });
+  localStorage.setItem("prestamos", JSON.stringify(prestamos));
+  mostrarPrestamos();
+}
+
+// MOSTRAR PRÉSTAMOS
+function mostrarPrestamos() {
+  const prestamos = JSON.parse(localStorage.getItem("prestamos")) || [];
+  const tbody = document.getElementById("tablaPrestamos");
+  tbody.innerHTML = "";
+  prestamos.forEach((p, i) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${p.desc}</td>
+        <td>$${p.monto.toFixed(2)}</td>
+        <td>${p.frecuencia}</td>
+        <td>${p.fecha}</td>
+        <td>
+          <button onclick="eliminarPrestamo(${i})">❌</button>
+        </td>
+      </tr>`;
+  });
+}
+
+// ELIMINAR PRÉSTAMO
+function eliminarPrestamo(index) {
+  if (!confirm("¿Eliminar este préstamo?")) return;
+  const prestamos = JSON.parse(localStorage.getItem("prestamos")) || [];
+  prestamos.splice(index, 1);
+  localStorage.setItem("prestamos", JSON.stringify(prestamos));
+  mostrarPrestamos();
+}
+
+// RESUMEN FINAL
+function calcularResumen() {
+  const ingreso = parseFloat(localStorage.getItem("ingresoMensual") || 0);
+  const tarjetas = JSON.parse(localStorage.getItem("tarjetas")) || [];
+  const servicios = JSON.parse(localStorage.getItem("servicios")) || [];
+  const prestamos = JSON.parse(localStorage.getItem("prestamos")) || [];
+
+  let totalGastos = 0;
+  tarjetas.forEach(t => totalGastos += parseFloat(t.monto));
+  servicios.forEach(s => totalGastos += parseFloat(s.monto));
+  prestamos.forEach(p => totalGastos += parseFloat(p.monto));
+
+  document.getElementById("totalIngresos").innerText = ingreso.toFixed(2);
+  document.getElementById("totalGastos").innerText = totalGastos.toFixed(2);
+  document.getElementById("saldoRestante").innerText = (ingreso - totalGastos).toFixed(2);
+
+  const hoy = new Date();
+  const mes = hoy.toLocaleDateString("es-MX", { month: "long", year: "numeric" });
+  document.getElementById("mesBalance").innerText = mes.charAt(0).toUpperCase() + mes.slice(1);
+}
+
+window.onload = () => {
+  actualizarUsuario();
+  mostrarTarjetas();
+  mostrarServicios();
+  mostrarPrestamos();
+  calcularResumen();
+};
+</script>
+
